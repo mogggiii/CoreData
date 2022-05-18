@@ -13,6 +13,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
 
 	func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
+		/// Configure nav bar
+		/// - Changes:
+		/// -  Nav bar tint color
+		/// - Title color
+		let appearance = UINavigationBarAppearance()
+		appearance.configureWithOpaqueBackground()
+		appearance.backgroundColor = .navBarLightRed
+		appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		
+		UINavigationBar.appearance().standardAppearance = appearance
+		UINavigationBar.appearance().scrollEdgeAppearance = UINavigationBar.appearance().standardAppearance
+		UINavigationBar.appearance().tintColor = .white
+		UINavigationBar.appearance().isTranslucent = false
+		UINavigationBar.appearance().prefersLargeTitles = true
 		return true
 	}
 

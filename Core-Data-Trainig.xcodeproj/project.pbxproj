@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		CEC4D03B2832560B00D06A3F /* CompaniesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */; };
 		CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */; };
+		CEC4D03F2834FDD500D06A3F /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03E2834FDD500D06A3F /* Company.swift */; };
+		CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D040283500E700D06A3F /* CreateCompanyController.swift */; };
 		CEF00C3D282BEA8200F15510 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C3C282BEA8200F15510 /* AppDelegate.swift */; };
 		CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C3E282BEA8200F15510 /* SceneDelegate.swift */; };
 		CEF00C41282BEA8200F15510 /* CompaniesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C40282BEA8200F15510 /* CompaniesViewController.swift */; };
@@ -19,6 +21,8 @@
 /* Begin PBXFileReference section */
 		CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesCell.swift; sourceTree = "<group>"; };
 		CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
+		CEC4D03E2834FDD500D06A3F /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
+		CEC4D040283500E700D06A3F /* CreateCompanyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyController.swift; sourceTree = "<group>"; };
 		CEF00C39282BEA8200F15510 /* Core-Data-Trainig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Core-Data-Trainig.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF00C3C282BEA8200F15510 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF00C3E282BEA8200F15510 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -39,6 +43,31 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		CEC4D0422835017B00D06A3F /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				CEF00C40282BEA8200F15510 /* CompaniesViewController.swift */,
+				CEC4D040283500E700D06A3F /* CreateCompanyController.swift */,
+			);
+			path = Controllers;
+			sourceTree = "<group>";
+		};
+		CEC4D0432835018A00D06A3F /* View */ = {
+			isa = PBXGroup;
+			children = (
+				CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */,
+			);
+			path = View;
+			sourceTree = "<group>";
+		};
+		CEC4D0442835019400D06A3F /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				CEC4D03E2834FDD500D06A3F /* Company.swift */,
+			);
+			path = Model;
+			sourceTree = "<group>";
+		};
 		CEF00C30282BEA8200F15510 = {
 			isa = PBXGroup;
 			children = (
@@ -58,10 +87,11 @@
 		CEF00C3B282BEA8200F15510 /* Core-Data-Trainig */ = {
 			isa = PBXGroup;
 			children = (
+				CEC4D0442835019400D06A3F /* Model */,
+				CEC4D0432835018A00D06A3F /* View */,
+				CEC4D0422835017B00D06A3F /* Controllers */,
 				CEF00C3C282BEA8200F15510 /* AppDelegate.swift */,
 				CEF00C3E282BEA8200F15510 /* SceneDelegate.swift */,
-				CEF00C40282BEA8200F15510 /* CompaniesViewController.swift */,
-				CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */,
 				CEF00C48282BEA8800F15510 /* Assets.xcassets */,
 				CEF00C4A282BEA8800F15510 /* LaunchScreen.storyboard */,
 				CEF00C4D282BEA8800F15510 /* Info.plist */,
@@ -143,8 +173,10 @@
 				CEF00C41282BEA8200F15510 /* CompaniesViewController.swift in Sources */,
 				CEC4D03B2832560B00D06A3F /* CompaniesCell.swift in Sources */,
 				CEF00C3D282BEA8200F15510 /* AppDelegate.swift in Sources */,
+				CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */,
 				CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */,
 				CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */,
+				CEC4D03F2834FDD500D06A3F /* Company.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

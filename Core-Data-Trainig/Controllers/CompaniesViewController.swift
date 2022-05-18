@@ -9,6 +9,12 @@ import UIKit
 
 class CompaniesViewController: UIViewController {
 	
+	fileprivate let companies = [
+		Company(name: "2333", founded: Date()),
+		Company(name: "4599", founded: Date()),
+		Company(name: "4344", founded: Date()),
+	]
+	
 	fileprivate let reuseId = "cell"
 	
 	private lazy var tableView: UITableView = {
@@ -31,36 +37,22 @@ class CompaniesViewController: UIViewController {
 		navigationItem.title = "Companies"
 		
 		configureNavBarButtons()
-		setupNavigationStyle()
+//		self.setupNavigationStyle()
 	}
 	
 	// MARK: - Fileprivate
-	/// Configure nav bar
-	/// - Changes:
-	/// -  Nav bar tint color
-	/// - Title color
-	fileprivate func setupNavigationStyle() {
-		let appearance = UINavigationBarAppearance()
-		appearance.configureWithOpaqueBackground()
-		appearance.backgroundColor = .navBarLightRed
-		appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		
-		navigationController?.navigationBar.standardAppearance = appearance
-		navigationController?.navigationBar.scrollEdgeAppearance = navigationController?.navigationBar.standardAppearance
-		navigationController?.navigationBar.isTranslucent = false
-		navigationController?.navigationBar.prefersLargeTitles = true
-	}
-	
 	/// Configure navigation buttons
 	fileprivate func configureNavBarButtons() {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAddCompany))
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
-		navigationItem.leftBarButtonItem?.tintColor = .white
 	}
 	
 	// MARK: - Objc fileprivate
 	@objc fileprivate func handleAddCompany() {
+		let createCompanyController = CreateCompanyController()
+		let navVC = CustomNavigationController(rootViewController: createCompanyController)
+		navVC.modalPresentationStyle = .fullScreen
+		present(navVC, animated: true)
 		print("ADD TAP")
 	}
 	
@@ -72,22 +64,26 @@ class CompaniesViewController: UIViewController {
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return 3
+		return companies.count
 	}
 	
-	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-		let header = UIView()
-		header.backgroundColor = .yellow
-		return header
-	}
-	
-	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-		return 50
-	}
+//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+//		let header = UIView()
+//		header.backgroundColor = .yellow
+//		return header
+//	}
+//
+//	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+//		return 50
+//	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-		let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as! CompaniesCell
+		guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as? CompaniesCell else {
+			return UITableViewCell()
+		}
 		
+		let company = companies[indexPath.row]
+		cell.company = company
 		return cell
 	}
 	
