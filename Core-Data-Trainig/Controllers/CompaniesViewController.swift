@@ -9,7 +9,7 @@ import UIKit
 
 class CompaniesViewController: UIViewController {
 	
-	fileprivate let companies = [
+	fileprivate var companies = [
 		Company(name: "2333", founded: Date()),
 		Company(name: "4599", founded: Date()),
 		Company(name: "4344", founded: Date()),
@@ -37,7 +37,6 @@ class CompaniesViewController: UIViewController {
 		navigationItem.title = "Companies"
 		
 		configureNavBarButtons()
-//		self.setupNavigationStyle()
 	}
 	
 	// MARK: - Fileprivate
@@ -52,12 +51,13 @@ class CompaniesViewController: UIViewController {
 		let createCompanyController = CreateCompanyController()
 		let navVC = CustomNavigationController(rootViewController: createCompanyController)
 		navVC.modalPresentationStyle = .fullScreen
+		
+		createCompanyController.delegate = self
 		present(navVC, animated: true)
-		print("ADD TAP")
 	}
 	
 	@objc fileprivate func handleReset() {
-		print("Reset")
+
 	}
 }
 
@@ -67,15 +67,15 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		return companies.count
 	}
 	
-//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-//		let header = UIView()
-//		header.backgroundColor = .yellow
-//		return header
-//	}
-//
-//	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-//		return 50
-//	}
+	//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+	//		let header = UIView()
+	//		header.backgroundColor = .yellow
+	//		return header
+	//	}
+	//
+	//	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+	//		return 50
+	//	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as? CompaniesCell else {
@@ -86,5 +86,13 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		cell.company = company
 		return cell
 	}
-	
+}
+
+extension CompaniesViewController: CreateCompanyControllerDelegate {
+	func didAddCompany(company: Company) {
+		companies.append(company)
+		
+		let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
+		tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
 }
