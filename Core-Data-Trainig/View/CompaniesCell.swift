@@ -11,14 +11,13 @@ class CompaniesCell: UITableViewCell {
 	
 	var company: Company? {
 		didSet {
-			guard let company = company else { return }
-			companyNameLabel.text = "\(company.name)"
+			guard let companyName = company?.name else { return }
+			companyNameLabel.text = companyName
 		}
 	}
 	
 	private let companyNameLabel: UILabel = {
 		let label = UILabel()
-		label.text = "HUIHUIHUIHUI"
 		label.textColor = .white
 		label.font = .systemFont(ofSize: 16)
 		label.translatesAutoresizingMaskIntoConstraints = false

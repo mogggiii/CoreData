@@ -45,21 +45,14 @@ class CompaniesViewController: UIViewController {
 	
 	/// Fetch companies form CoreData
 	fileprivate func fetchCompanies() {
-		let persistentContainer = NSPersistentContainer(name: "CompanyCoreData")
-		persistentContainer.loadPersistentStores { storeDescription, error in
-			if let error = error {
-				fatalError("Loading of store error, \(error)")
-			}
-		}
-		
-		let context = persistentContainer.viewContext
+		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
 		
 		do {
 			let companies = try context.fetch(fetchRequest)
 			self.companies = companies
-			companies.forEach { company in
-				print(company.name)
+			DispatchQueue.main.async {
+				self.tableView.reloadData()
 			}
 		} catch let fetchError {
 			print("Failed to fetch", fetchError)
