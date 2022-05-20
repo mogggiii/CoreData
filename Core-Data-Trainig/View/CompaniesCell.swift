@@ -45,7 +45,7 @@ class CompaniesCell: UITableViewCell {
 	}
 	
 	fileprivate func configureUI() {
-		let imageSize: CGFloat = 60
+		let imageSize: CGFloat = 40
 		
 		contentView.addSubview(companyLogo)
 		contentView.addSubview(companyNameLabel)

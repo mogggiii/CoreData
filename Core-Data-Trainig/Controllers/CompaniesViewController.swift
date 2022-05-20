@@ -70,15 +70,16 @@ class CompaniesViewController: UIViewController {
 	}
 	
 	@objc fileprivate func handleReset() {
-		companies.removeAll()
-		DispatchQueue.main.async {
-			self.tableView.reloadData()
-		}
+		let context = CoreDataManager.shared.persistentContainer.viewContext
 	}
 }
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
+	func numberOfSections(in tableView: UITableView) -> Int {
+		return 1
+	}
+	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return companies.count
 	}
@@ -101,6 +102,34 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		let company = companies[indexPath.row]
 		cell.company = company
 		return cell
+	}
+	
+	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {
+		let deleteAction = UIContextualAction(style: .destructive, title: "Delete") { contextualAction, view, _ in
+			let company = self.companies[indexPath.row]
+			
+			/// remove company from tableView
+			self.companies.remove(at: indexPath.row)
+			self.tableView.deleteRows(at: [indexPath], with: .middle)
+			
+			/// delete company from core data
+			let context = CoreDataManager.shared.persistentContainer.viewContext
+			context.delete(company)
+			
+			do {
+				try context.save()
+			} catch let saveError {
+				print("Failde to delete company", saveError)
+			}
+			
+		}
+		
+		let editAction = UIContextualAction(style: .normal, title: "Edit") { contextualAction, view, _ in
+			let company = self.companies[indexPath.row]
+		}
+		
+		let swipeAction = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
+		return swipeAction
 	}
 }
 
