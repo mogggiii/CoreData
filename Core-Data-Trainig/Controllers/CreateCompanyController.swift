@@ -6,8 +6,9 @@
 //
 
 import UIKit
+import CoreData
 
-protocol CreateCompanyControllerDelegate: class {
+protocol CreateCompanyControllerDelegate: AnyObject {
 	func didAddCompany(company: Company)
 }
 
@@ -19,7 +20,6 @@ class CreateCompanyController: UIViewController {
 		let label = UILabel()
 		label.text = "Name"
 		label.textColor = .black
-		label.backgroundColor = .red
 		label.translatesAutoresizingMaskIntoConstraints = false
 		return label
 	}()
@@ -27,7 +27,7 @@ class CreateCompanyController: UIViewController {
 	let nameTextField: UITextField = {
 		let textField = UITextField()
 		textField.placeholder = "Enter Name"
-		textField.backgroundColor = .yellow
+		textField.textColor = .black
 		textField.translatesAutoresizingMaskIntoConstraints = false
 		return textField
 	}()
@@ -38,14 +38,16 @@ class CreateCompanyController: UIViewController {
 		setupUI()
 		configureNavigationButtons()
 		
-		title = "Create Company"
+		navigationItem.title = "Create Company"
 		
 		view.backgroundColor = .tableViewBackground
 	}
 	
+	// MARK: - Fileprivate
 	fileprivate func configureNavigationButtons() {
+		// left button
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
-		
+		// right button
 		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
 	}
 	
@@ -65,11 +67,11 @@ class CreateCompanyController: UIViewController {
 			nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
 			nameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
 			nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
-			
+			nameTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 		])
 	}
 	
+	/// Containet view
 	fileprivate func setupContainerView() -> UIView {
 		let container = UIView()
 		container.backgroundColor = .lightBlue
@@ -86,18 +88,35 @@ class CreateCompanyController: UIViewController {
 		return container
 	}
 	
+	// MARK: - Objc fileprivate
 	@objc fileprivate func handleCancel() {
 		dismiss(animated: true)
 	}
 	
 	@objc fileprivate func handleSave() {
-		dismiss(animated: true) {
-			guard let name = self.nameTextField.text else { return }
-			let company = Company(name: name, founded: Date())
-			self.delegate?.didAddCompany(company: company)
+		print("Trying to save")
+		let persistentContainer = NSPersistentContainer(name: "CompanyCoreData")
+		persistentContainer.loadPersistentStores { storeDescription, error in
+			if let error = error {
+				fatalError("Loading of store error, \(error)")
+			}
 		}
 		
+		let context = persistentContainer.viewContext
+		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
-		print("save")
+		company.setValue(nameTextField.text, forKey: "name")
+		
+		do {
+			try context.save()
+		} catch let saveError {
+			print("Failed to save compny", saveError)
+		}
+//		dismiss(animated: true) {
+//			guard let name = self.nameTextField.text else { return }
+////			let company = Company(name: name, founded: Date())
+////			self.delegate?.didAddCompany(company: company)
+//		}
 	}
+	
 }

@@ -6,15 +6,11 @@
 //
 
 import UIKit
+import CoreData
 
 class CompaniesViewController: UIViewController {
 	
-	fileprivate var companies = [
-		Company(name: "2333", founded: Date()),
-		Company(name: "4599", founded: Date()),
-		Company(name: "4344", founded: Date()),
-	]
-	
+	fileprivate var companies = [Company]()
 	fileprivate let reuseId = "cell"
 	
 	private lazy var tableView: UITableView = {
@@ -34,8 +30,9 @@ class CompaniesViewController: UIViewController {
 		
 		view.addSubview(tableView)
 		
-		navigationItem.title = "Companies"
+		title = "Companies"
 		
+		fetchCompanies()
 		configureNavBarButtons()
 	}
 	
@@ -44,6 +41,29 @@ class CompaniesViewController: UIViewController {
 	fileprivate func configureNavBarButtons() {
 		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAddCompany))
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
+	}
+	
+	/// Fetch companies form CoreData
+	fileprivate func fetchCompanies() {
+		let persistentContainer = NSPersistentContainer(name: "CompanyCoreData")
+		persistentContainer.loadPersistentStores { storeDescription, error in
+			if let error = error {
+				fatalError("Loading of store error, \(error)")
+			}
+		}
+		
+		let context = persistentContainer.viewContext
+		let fetchRequest = NSFetchRequest<Company>(entityName: "Company")
+		
+		do {
+			let companies = try context.fetch(fetchRequest)
+			self.companies = companies
+			companies.forEach { company in
+				print(company.name)
+			}
+		} catch let fetchError {
+			print("Failed to fetch", fetchError)
+		}
 	}
 	
 	// MARK: - Objc fileprivate
@@ -57,7 +77,10 @@ class CompaniesViewController: UIViewController {
 	}
 	
 	@objc fileprivate func handleReset() {
-
+		companies.removeAll()
+		DispatchQueue.main.async {
+			self.tableView.reloadData()
+		}
 	}
 }
 

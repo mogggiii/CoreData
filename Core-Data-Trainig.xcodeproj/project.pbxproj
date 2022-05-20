@@ -11,6 +11,7 @@
 		CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */; };
 		CEC4D03F2834FDD500D06A3F /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03E2834FDD500D06A3F /* Company.swift */; };
 		CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D040283500E700D06A3F /* CreateCompanyController.swift */; };
+		CEE6AD972837DC7E0048EA23 /* CompanyCoreData.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = CEE6AD952837DC7E0048EA23 /* CompanyCoreData.xcdatamodeld */; };
 		CEF00C3D282BEA8200F15510 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C3C282BEA8200F15510 /* AppDelegate.swift */; };
 		CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C3E282BEA8200F15510 /* SceneDelegate.swift */; };
 		CEF00C41282BEA8200F15510 /* CompaniesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEF00C40282BEA8200F15510 /* CompaniesViewController.swift */; };
@@ -23,6 +24,7 @@
 		CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
 		CEC4D03E2834FDD500D06A3F /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
 		CEC4D040283500E700D06A3F /* CreateCompanyController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyController.swift; sourceTree = "<group>"; };
+		CEE6AD962837DC7E0048EA23 /* CompanyCoreData.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = CompanyCoreData.xcdatamodel; sourceTree = "<group>"; };
 		CEF00C39282BEA8200F15510 /* Core-Data-Trainig.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Core-Data-Trainig.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CEF00C3C282BEA8200F15510 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		CEF00C3E282BEA8200F15510 /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -96,6 +98,7 @@
 				CEF00C4A282BEA8800F15510 /* LaunchScreen.storyboard */,
 				CEF00C4D282BEA8800F15510 /* Info.plist */,
 				CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */,
+				CEE6AD952837DC7E0048EA23 /* CompanyCoreData.xcdatamodeld */,
 			);
 			path = "Core-Data-Trainig";
 			sourceTree = "<group>";
@@ -176,6 +179,7 @@
 				CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */,
 				CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */,
 				CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */,
+				CEE6AD972837DC7E0048EA23 /* CompanyCoreData.xcdatamodeld in Sources */,
 				CEC4D03F2834FDD500D06A3F /* Company.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -386,6 +390,19 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		CEE6AD952837DC7E0048EA23 /* CompanyCoreData.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				CEE6AD962837DC7E0048EA23 /* CompanyCoreData.xcdatamodel */,
+			);
+			currentVersion = CEE6AD962837DC7E0048EA23 /* CompanyCoreData.xcdatamodel */;
+			path = CompanyCoreData.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
 	};
 	rootObject = CEF00C31282BEA8200F15510 /* Project object */;
 }
