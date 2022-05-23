@@ -15,6 +15,19 @@ protocol CreateCompanyControllerDelegate: AnyObject {
 
 class CreateCompanyController: UIViewController {
 	
+	// MARK: - CreateCompanyController Constants
+	private enum Constants {
+		enum Sizes: CGFloat {
+			case logoSize = 100
+			case containerViewHeight = 350
+			case fieldsHeight = 50
+		}
+		enum Spaces: CGFloat {
+			case defaultSpace = 16
+			case logoTopSpace = 8
+		}
+	}
+	
 	weak var delegate: CreateCompanyControllerDelegate?
 	
 	var company: Company? {
@@ -25,11 +38,13 @@ class CreateCompanyController: UIViewController {
 		}
 	}
 	
+	// MARK: - UI Components
 	private let nameLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Name"
 		label.textColor = .black
 		label.translatesAutoresizingMaskIntoConstraints = false
+		label.backgroundColor = .red
 		return label
 	}()
 	
@@ -38,6 +53,7 @@ class CreateCompanyController: UIViewController {
 		textField.placeholder = "Enter Name"
 		textField.textColor = .black
 		textField.translatesAutoresizingMaskIntoConstraints = false
+		textField.backgroundColor = .yellow
 		return textField
 	}()
 	
@@ -47,6 +63,17 @@ class CreateCompanyController: UIViewController {
 		datePicker.preferredDatePickerStyle = .wheels
 		datePicker.datePickerMode = .date
 		return datePicker
+	}()
+	
+	private lazy var companyLogo: UIImageView = {
+		let imageView = UIImageView(image: UIImage(named: "select_photo_placeholder"))
+		imageView.translatesAutoresizingMaskIntoConstraints = false
+		imageView.isUserInteractionEnabled = true
+		imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
+		imageView.layer.cornerRadius = Constants.Sizes.logoSize.rawValue / 2
+		imageView.clipsToBounds = true
+		imageView.contentMode = .scaleAspectFill
+		return imageView
 	}()
 	
 	override func viewDidLoad() {
@@ -73,32 +100,37 @@ class CreateCompanyController: UIViewController {
 	
 	fileprivate func setupUI() {
 		let containerView = setupContainerView()
-		containerView.addSubview(nameLabel)
-		containerView.addSubview(nameTextField)
+		let nameStackView = createStackView(subviews: [nameLabel, nameTextField])
+		
+		containerView.addSubview(companyLogo)
+		containerView.addSubview(nameStackView)
 		containerView.addSubview(foundedDatePicker)
 		
 		NSLayoutConstraint.activate([
-			// Name label autholayout
-			nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
-			nameLabel.widthAnchor.constraint(equalToConstant: 100),
-			nameLabel.heightAnchor.constraint(equalToConstant: 50),
+			// Company Logo Autholayout
+			companyLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Constants.Spaces.logoTopSpace.rawValue),
+			companyLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+			companyLogo.heightAnchor.constraint(equalToConstant: Constants.Sizes.logoSize.rawValue),
+			companyLogo.widthAnchor.constraint(equalToConstant: Constants.Sizes.logoSize.rawValue),
 			
-			// Name text field autholayout
-			nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
-			nameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
-			nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameTextField.heightAnchor.constraint(equalToConstant: 50),
+			// Name Stack View Autholayout
+			nameStackView.topAnchor.constraint(equalTo: companyLogo.bottomAnchor, constant: Constants.Spaces.defaultSpace.rawValue),
+			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.Spaces.defaultSpace.rawValue),
+			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.Spaces.defaultSpace.rawValue),
+			nameStackView.heightAnchor.constraint(equalToConstant: Constants.Sizes.fieldsHeight.rawValue),
+			
+			// Name label autholayout
+			nameLabel.widthAnchor.constraint(equalToConstant: 100),
 			
 			// Date Picker Autholayot
-			foundedDatePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+			foundedDatePicker.topAnchor.constraint(equalTo: nameStackView.bottomAnchor),
 			foundedDatePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			foundedDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			foundedDatePicker.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 		])
 	}
 	
-	/// Containet view
+	/// Container view
 	fileprivate func setupContainerView() -> UIView {
 		let container = UIView()
 		container.backgroundColor = .lightBlue
@@ -109,10 +141,17 @@ class CreateCompanyController: UIViewController {
 			container.topAnchor.constraint(equalTo: view.topAnchor),
 			container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			container.heightAnchor.constraint(equalToConstant: 250),
+			container.heightAnchor.constraint(equalToConstant: Constants.Sizes.containerViewHeight.rawValue),
 		])
 		
 		return container
+	}
+	
+	/// Generate stack view
+	fileprivate func createStackView(subviews: [UIView]) -> UIStackView {
+		let stackView = UIStackView(arrangedSubviews: subviews)
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		return stackView
 	}
 	
 	fileprivate func createCompany() {
@@ -162,4 +201,30 @@ class CreateCompanyController: UIViewController {
 		}
 	}
 	
+	/// Present image picker controller
+	@objc fileprivate func handleSelectPhoto() {
+		let imagePickerController = UIImagePickerController()
+		imagePickerController.delegate = self
+		present(imagePickerController, animated: true)
+	}
+}
+
+// MARK: - UIImagePickerControllerDelegate, UINavigationControllerDelegate
+extension CreateCompanyController: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+	func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+		dismiss(animated: true)
+	}
+	
+	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
+		
+		if let editingImage = info[.editedImage] as? UIImage {
+			companyLogo.image = editingImage
+		}
+		
+		if let originalImage = info[.originalImage] as? UIImage {
+			companyLogo.image = originalImage
+		}
+		
+		dismiss(animated: true)
+	}
 }
