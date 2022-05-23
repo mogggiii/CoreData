@@ -21,10 +21,11 @@ class CreateCompanyController: UIViewController {
 		didSet {
 			guard let company = company else { return }
 			nameTextField.text = company.name
+			foundedDatePicker.date = company.founded ?? Date()
 		}
 	}
 	
-	let nameLabel: UILabel = {
+	private let nameLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Name"
 		label.textColor = .black
@@ -32,12 +33,20 @@ class CreateCompanyController: UIViewController {
 		return label
 	}()
 	
-	let nameTextField: UITextField = {
+	private let nameTextField: UITextField = {
 		let textField = UITextField()
 		textField.placeholder = "Enter Name"
 		textField.textColor = .black
 		textField.translatesAutoresizingMaskIntoConstraints = false
 		return textField
+	}()
+	
+	private let foundedDatePicker: UIDatePicker = {
+		let datePicker = UIDatePicker()
+		datePicker.translatesAutoresizingMaskIntoConstraints = false
+		datePicker.preferredDatePickerStyle = .wheels
+		datePicker.datePickerMode = .date
+		return datePicker
 	}()
 	
 	override func viewDidLoad() {
@@ -66,19 +75,26 @@ class CreateCompanyController: UIViewController {
 		let containerView = setupContainerView()
 		containerView.addSubview(nameLabel)
 		containerView.addSubview(nameTextField)
+		containerView.addSubview(foundedDatePicker)
 		
 		NSLayoutConstraint.activate([
-			/// Name label autholayout
+			// Name label autholayout
 			nameLabel.topAnchor.constraint(equalTo: containerView.topAnchor),
 			nameLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 16),
 			nameLabel.widthAnchor.constraint(equalToConstant: 100),
 			nameLabel.heightAnchor.constraint(equalToConstant: 50),
 			
-			/// Name text field autholayout
+			// Name text field autholayout
 			nameTextField.leadingAnchor.constraint(equalTo: nameLabel.trailingAnchor),
 			nameTextField.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -16),
 			nameTextField.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameTextField.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
+			nameTextField.heightAnchor.constraint(equalToConstant: 50),
+			
+			// Date Picker Autholayot
+			foundedDatePicker.topAnchor.constraint(equalTo: nameLabel.bottomAnchor),
+			foundedDatePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+			foundedDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+			foundedDatePicker.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 		])
 	}
 	
@@ -93,7 +109,7 @@ class CreateCompanyController: UIViewController {
 			container.topAnchor.constraint(equalTo: view.topAnchor),
 			container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
 			container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			container.heightAnchor.constraint(equalToConstant: 50),
+			container.heightAnchor.constraint(equalToConstant: 250),
 		])
 		
 		return container
@@ -103,8 +119,9 @@ class CreateCompanyController: UIViewController {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
-		guard let companyName = nameTextField.text else { return }
+		guard let companyName = nameTextField.text, nameTextField.hasText else { return }
 		company.setValue(companyName, forKey: "name")
+		company.setValue(foundedDatePicker.date, forKey: "founded")
 		
 		do {
 			try context.save()
@@ -119,6 +136,7 @@ class CreateCompanyController: UIViewController {
 	fileprivate func saveComanyChanges() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		company?.name = nameTextField.text
+		company?.founded = foundedDatePicker.date
 		
 		do {
 			try context.save()
