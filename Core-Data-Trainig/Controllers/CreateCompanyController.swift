@@ -10,11 +10,19 @@ import CoreData
 
 protocol CreateCompanyControllerDelegate: AnyObject {
 	func didAddCompany(company: Company)
+	func didChangeCompany(company: Company)
 }
 
 class CreateCompanyController: UIViewController {
 	
 	weak var delegate: CreateCompanyControllerDelegate?
+	
+	var company: Company? {
+		didSet {
+			guard let company = company else { return }
+			nameTextField.text = company.name
+		}
+	}
 	
 	let nameLabel: UILabel = {
 		let label = UILabel()
@@ -34,13 +42,16 @@ class CreateCompanyController: UIViewController {
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
+		view.backgroundColor = .darkBlue
 		
 		setupUI()
 		configureNavigationButtons()
+	}
+	
+	override func viewWillAppear(_ animated: Bool) {
+		super.viewWillAppear(animated)
 		
-		navigationItem.title = "Create Company"
-		
-		view.backgroundColor = .tableViewBackground
+		navigationItem.title = company == nil ? "Create Company" : "Edit Company"
 	}
 	
 	// MARK: - Fileprivate
@@ -88,14 +99,7 @@ class CreateCompanyController: UIViewController {
 		return container
 	}
 	
-	// MARK: - Objc fileprivate
-	@objc fileprivate func handleCancel() {
-		dismiss(animated: true)
-	}
-	
-	@objc fileprivate func handleSave() {
-		print("Trying to save")
-		
+	fileprivate func createCompany() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
@@ -104,12 +108,39 @@ class CreateCompanyController: UIViewController {
 		
 		do {
 			try context.save()
-			
 			dismiss(animated: true) {
 				self.delegate?.didAddCompany(company: company as! Company)
 			}
 		} catch let saveError {
-			print("Failed to save compny", saveError)
+			print("Failed to save company", saveError)
+		}
+	}
+	
+	fileprivate func saveComanyChanges() {
+		let context = CoreDataManager.shared.persistentContainer.viewContext
+		company?.name = nameTextField.text
+		
+		do {
+			try context.save()
+			dismiss(animated: true) {
+				self.delegate?.didChangeCompany(company: self.company!)
+			}
+		} catch let changesError {
+			print("Failed to save company changes", changesError)
+		}
+	}
+	
+	// MARK: - Objc fileprivate
+	@objc fileprivate func handleCancel() {
+		dismiss(animated: true)
+	}
+	
+	/// save object to core data
+	@objc fileprivate func handleSave() {
+		if company == nil {
+			createCompany()
+		} else {
+			saveComanyChanges()
 		}
 	}
 	

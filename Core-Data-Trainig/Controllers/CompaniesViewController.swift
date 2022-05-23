@@ -18,7 +18,7 @@ class CompaniesViewController: UIViewController {
 		tableView.dataSource = self
 		tableView.delegate = self
 		tableView.register(CompaniesCell.self, forCellReuseIdentifier: reuseId)
-		tableView.backgroundColor = .tableViewBackground
+		tableView.backgroundColor = .darkBlue
 		tableView.separatorColor = .white
 		tableView.tableFooterView = UIView()
 		return tableView
@@ -76,9 +76,9 @@ class CompaniesViewController: UIViewController {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
-	func numberOfSections(in tableView: UITableView) -> Int {
-		return 1
-	}
+//	func numberOfSections(in tableView: UITableView) -> Int {
+//		return 1
+//	}
 	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return companies.count
@@ -121,23 +121,41 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 			} catch let saveError {
 				print("Failde to delete company", saveError)
 			}
-			
 		}
+		deleteAction.backgroundColor = .lightRed
 		
 		let editAction = UIContextualAction(style: .normal, title: "Edit") { contextualAction, view, _ in
-			let company = self.companies[indexPath.row]
+			let editCompanyController = CreateCompanyController()
+			editCompanyController.delegate = self
+			editCompanyController.company = self.companies[indexPath.row]
+			let navVC = CustomNavigationController(rootViewController: editCompanyController)
+			navVC.modalPresentationStyle = .fullScreen
+			
+			self.present(navVC, animated: true)
 		}
+		editAction.backgroundColor = .darkBlue
 		
 		let swipeAction = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
 		return swipeAction
 	}
 }
 
+// MARK: - CreateCompanyControllerDelegate
 extension CompaniesViewController: CreateCompanyControllerDelegate {
+	/// adding new row
 	func didAddCompany(company: Company) {
 		companies.append(company)
 		
 		let newIndexPath = IndexPath(row: companies.count - 1, section: 0)
 		tableView.insertRows(at: [newIndexPath], with: .automatic)
+	}
+	
+	/// update company info 
+	func didChangeCompany(company: Company) {
+		let row = companies.firstIndex(of: company)
+		let reloadIndexPath = IndexPath(row: row!, section: 0)
+		DispatchQueue.main.async {
+			self.tableView.reloadRows(at: [reloadIndexPath], with: .middle)
+		}
 	}
 }

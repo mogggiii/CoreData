@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 		/// - Title color
 		let appearance = UINavigationBarAppearance()
 		appearance.configureWithOpaqueBackground()
-		appearance.backgroundColor = .navBarLightRed
+		appearance.backgroundColor = .lightRed
 		appearance.largeTitleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 		appearance.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 		
