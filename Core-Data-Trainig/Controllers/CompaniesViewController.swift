@@ -60,6 +60,10 @@ class CompaniesViewController: UIViewController {
 	}
 	
 	// MARK: - Objc fileprivate
+	
+	/// Add button:
+	/// - Open CreateCompanyController
+	/// - Use the delegate
 	@objc fileprivate func handleAddCompany() {
 		let createCompanyController = CreateCompanyController()
 		let navVC = CustomNavigationController(rootViewController: createCompanyController)
@@ -69,8 +73,28 @@ class CompaniesViewController: UIViewController {
 		present(navVC, animated: true)
 	}
 	
+	/// Reset button:
+	/// Delete all object from Core Data
 	@objc fileprivate func handleReset() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
+		let batchDeleteRequest = NSBatchDeleteRequest(fetchRequest: Company.fetchRequest())
+		
+		do {
+			try context.execute(batchDeleteRequest)
+			
+			var indexPathToRemove = [IndexPath]()
+			
+			for (index, _) in companies.enumerated() {
+				let indexPath = IndexPath(row: index, section: 0)
+				indexPathToRemove.append(indexPath)
+			}
+			
+			companies.removeAll()
+			tableView.deleteRows(at: indexPathToRemove, with: .left)
+		} catch let deleteError {
+			print("Failed to delete object from core data", deleteError)
+		}
+		
 	}
 }
 
@@ -110,7 +134,7 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 		deleteAction.backgroundColor = .lightRed
 		
-		// edit and delete action from cell 
+		// edit and delete action from cell
 		let editAction = UIContextualAction(style: .normal, title: "Edit") { contextualAction, view, _ in
 			let editCompanyController = CreateCompanyController()
 			editCompanyController.delegate = self
@@ -124,6 +148,20 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		
 		let swipeAction = UISwipeActionsConfiguration(actions: [deleteAction, editAction])
 		return swipeAction
+	}
+	
+	// Footer
+	func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+		let label = UILabel()
+		label.text = "No companies available..."
+		label.textColor = .white
+		label.textAlignment = .center
+		label.font = .systemFont(ofSize: 17, weight: .bold)
+		return label
+	}
+	
+	func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+		return companies.count == 0 ? 150 : 0
 	}
 }
 
