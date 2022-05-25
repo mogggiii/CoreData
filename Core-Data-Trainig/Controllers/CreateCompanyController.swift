@@ -35,6 +35,9 @@ class CreateCompanyController: UIViewController {
 			guard let company = company else { return }
 			nameTextField.text = company.name
 			foundedDatePicker.date = company.founded ?? Date()
+			
+			guard let imageData = company.imageData, let logo = UIImage(data: imageData) else { return }
+			companyLogo.image = logo
 		}
 	}
 	
@@ -44,7 +47,6 @@ class CreateCompanyController: UIViewController {
 		label.text = "Name"
 		label.textColor = .black
 		label.translatesAutoresizingMaskIntoConstraints = false
-		label.backgroundColor = .red
 		return label
 	}()
 	
@@ -53,7 +55,6 @@ class CreateCompanyController: UIViewController {
 		textField.placeholder = "Enter Name"
 		textField.textColor = .black
 		textField.translatesAutoresizingMaskIntoConstraints = false
-		textField.backgroundColor = .yellow
 		return textField
 	}()
 	
@@ -71,6 +72,8 @@ class CreateCompanyController: UIViewController {
 		imageView.isUserInteractionEnabled = true
 		imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
 		imageView.layer.cornerRadius = Constants.Sizes.logoSize.rawValue / 2
+		imageView.layer.borderColor = UIColor.darkBlue.cgColor
+		imageView.layer.borderWidth = 1
 		imageView.clipsToBounds = true
 		imageView.contentMode = .scaleAspectFill
 		return imageView
@@ -158,9 +161,11 @@ class CreateCompanyController: UIViewController {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
-		guard let companyName = nameTextField.text, nameTextField.hasText else { return }
-		company.setValue(companyName, forKey: "name")
+		guard let imageData = companyLogo.image?.jpegData(compressionQuality: 0.8) else { return }
+		
+		company.setValue(nameTextField.text, forKey: "name")
 		company.setValue(foundedDatePicker.date, forKey: "founded")
+		company.setValue(imageData, forKey: "imageData")
 		
 		do {
 			try context.save()
@@ -174,8 +179,12 @@ class CreateCompanyController: UIViewController {
 	
 	fileprivate func saveComanyChanges() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
+		let imageData = companyLogo.image?.jpegData(compressionQuality: 0.8)
+		
+		// update values in core data
 		company?.name = nameTextField.text
 		company?.founded = foundedDatePicker.date
+		company?.imageData = imageData
 		
 		do {
 			try context.save()

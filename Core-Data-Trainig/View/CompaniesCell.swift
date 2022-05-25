@@ -11,16 +11,22 @@ class CompaniesCell: UITableViewCell {
 	
 	var company: Company? {
 		didSet {
-			if let companyName = company?.name, let foundedDate = company?.founded {
-				let dateFormatter = DateFormatter()
-				dateFormatter.dateFormat = "MMM dd, yyyy"
-				
-				let foundedDateString = dateFormatter.string(from: foundedDate)
-				
-				companyNameLabel.text = "\(companyName) - Founded: \(foundedDateString)"
-			} else {
+		
+			guard let companyName = company?.name, let foundedDate = company?.founded else {
 				companyNameLabel.text = company?.name
+				return
 			}
+			
+			// setup label
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "MMM dd, yyyy"
+			
+			let foundedDateString = dateFormatter.string(from: foundedDate)
+			companyNameLabel.text = "\(companyName) - Founded: \(foundedDateString)"
+			
+			// setup imageView
+			guard let imageData = company?.imageData, let image = UIImage(data: imageData) else { return }
+			companyLogo.image = image
 		}
 	}
 	
@@ -37,7 +43,6 @@ class CompaniesCell: UITableViewCell {
 		iv.contentMode = .scaleAspectFill
 		iv.clipsToBounds = true
 		iv.translatesAutoresizingMaskIntoConstraints = false
-		iv.backgroundColor = .red
 		return iv
 	}()
 

@@ -76,23 +76,9 @@ class CompaniesViewController: UIViewController {
 
 // MARK: - UITableViewDelegate, UITableViewDataSource
 extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
-//	func numberOfSections(in tableView: UITableView) -> Int {
-//		return 1
-//	}
-	
 	func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 		return companies.count
 	}
-	
-	//	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-	//		let header = UIView()
-	//		header.backgroundColor = .yellow
-	//		return header
-	//	}
-	//
-	//	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-	//		return 50
-	//	}
 	
 	func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
 		guard let cell = tableView.dequeueReusableCell(withIdentifier: reuseId, for: indexPath) as? CompaniesCell else {
@@ -124,6 +110,7 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		}
 		deleteAction.backgroundColor = .lightRed
 		
+		// edit and delete action from cell 
 		let editAction = UIContextualAction(style: .normal, title: "Edit") { contextualAction, view, _ in
 			let editCompanyController = CreateCompanyController()
 			editCompanyController.delegate = self
