@@ -11,9 +11,8 @@ class CompaniesCell: UITableViewCell {
 	
 	var company: Company? {
 		didSet {
-		
 			guard let companyName = company?.name, let foundedDate = company?.founded else {
-				companyNameLabel.text = company?.name
+				companyNameFoundedDateLabel.text = company?.name
 				return
 			}
 			
@@ -22,15 +21,15 @@ class CompaniesCell: UITableViewCell {
 			dateFormatter.dateFormat = "MMM dd, yyyy"
 			
 			let foundedDateString = dateFormatter.string(from: foundedDate)
-			companyNameLabel.text = "\(companyName) - Founded: \(foundedDateString)"
+			companyNameFoundedDateLabel.text = "\(companyName) - Founded: \(foundedDateString)"
 			
 			// setup imageView
 			guard let imageData = company?.imageData, let image = UIImage(data: imageData) else { return }
-			companyLogo.image = image
+			companyLogoImageView.image = image
 		}
 	}
 	
-	private let companyNameLabel: UILabel = {
+	private let companyNameFoundedDateLabel: UILabel = {
 		let label = UILabel()
 		label.textColor = .white
 		label.font = .systemFont(ofSize: 16)
@@ -38,11 +37,12 @@ class CompaniesCell: UITableViewCell {
 		return label
 	}()
 	
-	private let companyLogo: UIImageView = {
+	private let companyLogoImageView: UIImageView = {
 		let iv = UIImageView()
 		iv.contentMode = .scaleAspectFill
 		iv.clipsToBounds = true
 		iv.translatesAutoresizingMaskIntoConstraints = false
+		iv.backgroundColor = .clear
 		return iv
 	}()
 
@@ -60,19 +60,19 @@ class CompaniesCell: UITableViewCell {
 	fileprivate func configureUI() {
 		let imageSize: CGFloat = 40
 		
-		contentView.addSubview(companyLogo)
-		contentView.addSubview(companyNameLabel)
-		companyLogo.layer.cornerRadius = imageSize / 2
+		contentView.addSubview(companyLogoImageView)
+		contentView.addSubview(companyNameFoundedDateLabel)
+		companyLogoImageView.layer.cornerRadius = imageSize / 2
 		
 		NSLayoutConstraint.activate([
-			companyLogo.heightAnchor.constraint(equalToConstant: imageSize),
-			companyLogo.widthAnchor.constraint(equalToConstant: imageSize),
-			companyLogo.topAnchor.constraint(equalTo: contentView.topAnchor, constant: 16),
-			companyLogo.bottomAnchor.constraint(equalTo: contentView.bottomAnchor, constant: -16),
-			companyLogo.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
+			companyLogoImageView.heightAnchor.constraint(equalToConstant: imageSize),
+			companyLogoImageView.widthAnchor.constraint(equalToConstant: imageSize),
+			companyLogoImageView.centerYAnchor.constraint(equalTo: contentView.centerYAnchor),
+			companyLogoImageView.leadingAnchor.constraint(equalTo: contentView.leadingAnchor, constant: 16),
 			
-			companyNameLabel.centerYAnchor.constraint(equalTo: companyLogo.centerYAnchor),
-			companyNameLabel.leadingAnchor.constraint(equalTo: companyLogo.trailingAnchor, constant: 16),
+			companyNameFoundedDateLabel.centerYAnchor.constraint(equalTo: companyLogoImageView.centerYAnchor),
+			companyNameFoundedDateLabel.leadingAnchor.constraint(equalTo: companyLogoImageView.trailingAnchor, constant: 16),
+			companyNameFoundedDateLabel.trailingAnchor.constraint(equalTo: contentView.trailingAnchor, constant: -16),
 		])
 	}
 	
