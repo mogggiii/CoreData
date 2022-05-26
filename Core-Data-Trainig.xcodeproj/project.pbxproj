@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CEA9069A283FE395004AFA83 /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */; };
+		CEA9069C283FE4F8004AFA83 /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */; };
 		CEC4D03B2832560B00D06A3F /* CompaniesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */; };
 		CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */; };
 		CEC4D03F2834FDD500D06A3F /* Company.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEC4D03E2834FDD500D06A3F /* Company.swift */; };
@@ -21,6 +23,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+CreateCompany.swift"; sourceTree = "<group>"; };
+		CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UITableView.swift"; sourceTree = "<group>"; };
 		CEC4D03A2832560B00D06A3F /* CompaniesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompaniesCell.swift; sourceTree = "<group>"; };
 		CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIColor+theme.swift"; sourceTree = "<group>"; };
 		CEC4D03E2834FDD500D06A3F /* Company.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Company.swift; sourceTree = "<group>"; };
@@ -95,6 +99,8 @@
 			isa = PBXGroup;
 			children = (
 				CEC4D03C28339B9100D06A3F /* UIColor+theme.swift */,
+				CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */,
+				CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */,
 			);
 			path = Extension;
 			sourceTree = "<group>";
@@ -201,8 +207,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF00C41282BEA8200F15510 /* CompaniesViewController.swift in Sources */,
+				CEA9069C283FE4F8004AFA83 /* CompaniesController+UITableView.swift in Sources */,
 				CEC4D03B2832560B00D06A3F /* CompaniesCell.swift in Sources */,
 				CEF00C3D282BEA8200F15510 /* AppDelegate.swift in Sources */,
+				CEA9069A283FE395004AFA83 /* CompaniesController+CreateCompany.swift in Sources */,
 				CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */,
 				CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */,
 				CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */,
