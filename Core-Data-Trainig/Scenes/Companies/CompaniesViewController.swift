@@ -42,8 +42,6 @@ class CompaniesViewController: UIViewController {
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
 	}
 	
-	
-	
 	// MARK: - Objc fileprivate
 	
 	/// Add button:
