@@ -17,13 +17,20 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 			return UITableViewCell()
 		}
 		
-		let company = companies[indexPath.row]
+		let company = self.companies[indexPath.row]
 		cell.company = company
 		return cell
 	}
 	
 	func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
 		return 60
+	}
+	
+	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+		let company = self.companies[indexPath.row]
+		let emloyessController = EmployeesController()
+		emloyessController.company = company
+		navigationController?.pushViewController(emloyessController, animated: true)
 	}
 	
 	func tableView(_ tableView: UITableView, trailingSwipeActionsConfigurationForRowAt indexPath: IndexPath) -> UISwipeActionsConfiguration? {

@@ -96,13 +96,13 @@ class CreateCompanyController: UIViewController {
 	// MARK: - Fileprivate
 	fileprivate func configureNavigationButtons() {
 		// left button
-		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Cancel", style: .plain, target: self, action: #selector(handleCancel))
+		setupCancelButtonInNavBar()
 		// right button
-		navigationItem.rightBarButtonItem = UIBarButtonItem(title: "Save", style: .plain, target: self, action: #selector(handleSave))
+		setupSaveButtonInNavBar(#selector(handleSave))
 	}
 	
 	fileprivate func setupUI() {
-		let containerView = setupContainerView()
+		let containerView = setupContainerView(height: Constants.Sizes.containerViewHeight.rawValue)
 		let nameStackView = createStackView(subviews: [nameLabel, nameTextField])
 		
 		containerView.addSubview(companyLogo)
@@ -131,23 +131,6 @@ class CreateCompanyController: UIViewController {
 			foundedDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
 			foundedDatePicker.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
 		])
-	}
-	
-	/// Container view
-	fileprivate func setupContainerView() -> UIView {
-		let container = UIView()
-		container.backgroundColor = .lightBlue
-		container.translatesAutoresizingMaskIntoConstraints = false
-		view.addSubview(container)
-		
-		NSLayoutConstraint.activate([
-			container.topAnchor.constraint(equalTo: view.topAnchor),
-			container.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			container.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			container.heightAnchor.constraint(equalToConstant: Constants.Sizes.containerViewHeight.rawValue),
-		])
-		
-		return container
 	}
 	
 	/// Generate stack view

@@ -38,7 +38,7 @@ class CompaniesViewController: UIViewController {
 	// MARK: - Fileprivate
 	/// Configure navigation buttons
 	fileprivate func configureNavBarButtons() {
-		navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "plus")?.withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleAddCompany))
+		setupPlusButtonInNavBar(#selector(handleAddCompany))
 		navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Reset", style: .plain, target: self, action: #selector(handleReset))
 	}
 	
