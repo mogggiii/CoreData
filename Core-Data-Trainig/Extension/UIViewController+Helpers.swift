@@ -39,6 +39,13 @@ extension UIViewController {
 		return container
 	}
 	
+	// Generate stack view
+	func createStackView(subviews: [UIView]) -> UIStackView {
+		let stackView = UIStackView(arrangedSubviews: subviews)
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		return stackView
+	}
+	
 	@objc fileprivate func handleCancelModal() {
 		dismiss(animated: true)
 	}

@@ -133,13 +133,6 @@ class CreateCompanyController: UIViewController {
 		])
 	}
 	
-	/// Generate stack view
-	fileprivate func createStackView(subviews: [UIView]) -> UIStackView {
-		let stackView = UIStackView(arrangedSubviews: subviews)
-		stackView.translatesAutoresizingMaskIntoConstraints = false
-		return stackView
-	}
-	
 	fileprivate func createCompany() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
