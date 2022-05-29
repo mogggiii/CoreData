@@ -26,6 +26,7 @@ class CreateEmployeeController: UIViewController {
 	}
 	
 	weak var delegate: CreateEmployeeControllerDelegate?
+	var company: Company?
 	
 	// MARK: - UI Components
 	
@@ -85,7 +86,9 @@ class CreateEmployeeController: UIViewController {
 	
 	@objc fileprivate func handleSave() {
 		guard let employeeName = employeeTextField.text else { return }
-		CoreDataManager.shared.createEmployee(employeeName: employeeName) { [weak self] result in
+		guard let company = company else { return }
+		
+		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company) { [weak self] result in
 			switch result {
 			case .success(let employee):
 				self?.dismiss(animated: true) {

@@ -57,11 +57,18 @@ class CoreDataManager {
 		}
 	}
 	
-	func createEmployee(employeeName: String, completion: @escaping (Result<Employee, Error>) -> ()) {
+	func createEmployee(employeeName: String, company: Company, completion: @escaping (Result<Employee, Error>) -> ()) {
 		let context = persistentContainer.viewContext
 		
 		let employee = NSEntityDescription.insertNewObject(forEntityName: "Employee", into: context) as! Employee
 		employee.setValue(employeeName, forKey: "name")
+		employee.company = company
+		
+		let employeeInfo = NSEntityDescription.insertNewObject(forEntityName: "EmployeeInformation", into: context) as! EmployeeInformation
+		employeeInfo.taxId = "456"
+//		employeeInfo.setValue("456", forKey: "taxId")
+		
+		employee.employeeInformation = employeeInfo
 		
 		do {
 			try context.save()

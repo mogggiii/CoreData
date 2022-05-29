@@ -36,16 +36,8 @@ class EmployeesController: UITableViewController {
 	}
 	
 	fileprivate func fetchEmployees() {
-		let context = CoreDataManager.shared.persistentContainer.viewContext
-		let request = NSFetchRequest<Employee>(entityName: "Employee")
-		
-		do {
-			let employees = try context.fetch(request)
-			self.employees = employees
-		} catch let fetchError {
-			print("Failed to fetch employees", fetchError)
-		}
-		
+		guard let companyEmployees = company?.employees?.allObjects as? [Employee] else { return }
+		self.employees = companyEmployees
 	}
 	
 	// MARK: - Objc fileprivate
@@ -54,6 +46,7 @@ class EmployeesController: UITableViewController {
 		print("Trying to add employee")
 		let createEmployeeController = CreateEmployeeController()
 		createEmployeeController.delegate = self
+		createEmployeeController.company = company
 		
 		let navVC = CustomNavigationController(rootViewController: createEmployeeController)
 		navVC.modalPresentationStyle = .fullScreen
