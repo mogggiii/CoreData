@@ -10,6 +10,7 @@
 		CE1C89E22840AA4F007A3EDC /* EmployeesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E12840AA4F007A3EDC /* EmployeesController.swift */; };
 		CE1C89E42840ADDE007A3EDC /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E32840ADDE007A3EDC /* UIViewController+Helpers.swift */; };
 		CE1C89E72840AFBB007A3EDC /* CreateEmployeeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E62840AFBB007A3EDC /* CreateEmployeeController.swift */; };
+		CE1C89E92840D441007A3EDC /* EmployeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E82840D440007A3EDC /* EmployeeCell.swift */; };
 		CEA9069A283FE395004AFA83 /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */; };
 		CEA9069C283FE4F8004AFA83 /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */; };
 		CEA906A2283FEA4F004AFA83 /* ContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA906A1283FEA4F004AFA83 /* ContainerView.swift */; };
@@ -29,6 +30,7 @@
 		CE1C89E12840AA4F007A3EDC /* EmployeesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesController.swift; sourceTree = "<group>"; };
 		CE1C89E32840ADDE007A3EDC /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		CE1C89E62840AFBB007A3EDC /* CreateEmployeeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeController.swift; sourceTree = "<group>"; };
+		CE1C89E82840D440007A3EDC /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
 		CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+CreateCompany.swift"; sourceTree = "<group>"; };
 		CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UITableView.swift"; sourceTree = "<group>"; };
 		CEA906A1283FEA4F004AFA83 /* ContainerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContainerView.swift; sourceTree = "<group>"; };
@@ -61,6 +63,7 @@
 			isa = PBXGroup;
 			children = (
 				CE1C89E12840AA4F007A3EDC /* EmployeesController.swift */,
+				CE1C89E82840D440007A3EDC /* EmployeeCell.swift */,
 			);
 			path = Employees;
 			sourceTree = "<group>";
@@ -248,6 +251,7 @@
 				CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */,
 				CE1C89E22840AA4F007A3EDC /* EmployeesController.swift in Sources */,
 				CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */,
+				CE1C89E92840D441007A3EDC /* EmployeeCell.swift in Sources */,
 				CE1C89E72840AFBB007A3EDC /* CreateEmployeeController.swift in Sources */,
 				CEE6AD992837EBF60048EA23 /* CoreDataManager.swift in Sources */,
 				CEA906A2283FEA4F004AFA83 /* ContainerView.swift in Sources */,

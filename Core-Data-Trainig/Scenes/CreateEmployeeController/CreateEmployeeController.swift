@@ -7,6 +7,11 @@
 
 import UIKit
 
+protocol CreateEmployeeControllerDelegate: AnyObject {
+	func didAddEmployee(_ employee: Employee)
+	//	func didChangeCompany(_ employee: Employee)
+}
+
 class CreateEmployeeController: UIViewController {
 	
 	private enum CreateEmployeeConstants {
@@ -19,6 +24,8 @@ class CreateEmployeeController: UIViewController {
 			case nameStackViewTopSpace = 8
 		}
 	}
+	
+	weak var delegate: CreateEmployeeControllerDelegate?
 	
 	// MARK: - UI Components
 	
@@ -78,13 +85,16 @@ class CreateEmployeeController: UIViewController {
 	
 	@objc fileprivate func handleSave() {
 		guard let employeeName = employeeTextField.text else { return }
-		let error = CoreDataManager.shared.createEmployee(employeeName: employeeName)
-		
-		if let error = error {
-			// use UIAlertController to present error alert
-			print(error)
-		} else {
-			dismiss(animated: true)
+		CoreDataManager.shared.createEmployee(employeeName: employeeName) { [weak self] result in
+			switch result {
+			case .success(let employee):
+				self?.dismiss(animated: true) {
+					self?.delegate?.didAddEmployee(employee)
+				}
+			case .failure(let error):
+				// use UIAlertController to present error alert
+				print("Error", error)
+			}
 		}
 	}
 }
