@@ -23,6 +23,7 @@ class SceneDelegate: UIResponder, UIWindowSceneDelegate {
 		let window = UIWindow(windowScene: scene)
 		let companiesController = CompaniesViewController()
 		window.makeKeyAndVisible()
+		window.overrideUserInterfaceStyle = .light
 		window.rootViewController = CustomNavigationController(rootViewController: companiesController)
 		self.window = window
 	}

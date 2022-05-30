@@ -12,9 +12,16 @@ class EmployeeCell: UITableViewCell {
 	
 	var employee: Employee? {
 		didSet {
-			guard let employee = employee else { return }
+			guard let employeeName = employee?.name, let birthday = employee?.employeeInformation?.birthday else {
+				employeeLabel.text = employee?.name
+				return
+			}
 			
-			employeeLabel.text = employee.name
+			let dateFormatter = DateFormatter()
+			dateFormatter.dateFormat = "dd MMM, yyyy"
+			
+			let birthdayDateString = dateFormatter.string(from: birthday)
+			employeeLabel.text = "\(employeeName)    \(birthdayDateString)"
 		}
 	}
 	

@@ -16,7 +16,7 @@ class CreateEmployeeController: UIViewController {
 	
 	private enum CreateEmployeeConstants {
 		enum Sizes: CGFloat {
-			case containerViewHeight = 55
+			case containerViewHeight = 100
 			case fieldsHeight = 50
 		}
 		enum Spaces: CGFloat {
@@ -46,6 +46,23 @@ class CreateEmployeeController: UIViewController {
 		return textField
 	}()
 	
+	private let birthdayLabel: UILabel = {
+		let label = UILabel()
+		label.text = "Birthday"
+		label.textColor = .black
+		label.translatesAutoresizingMaskIntoConstraints = false
+		return label
+	}()
+	
+	private let birthdayTextField: UITextField = {
+		let textField = UITextField()
+		textField.placeholder = "DD/MM/YYYY"
+		textField.keyboardType = .numbersAndPunctuation
+		textField.textColor = .black
+		textField.translatesAutoresizingMaskIntoConstraints = false
+		return textField
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -66,20 +83,53 @@ class CreateEmployeeController: UIViewController {
 	
 	fileprivate func setupLayout() {
 		let containerView = setupContainerView(height: CreateEmployeeConstants.Sizes.containerViewHeight.rawValue)
-		let stackView = createStackView(subviews: [nameLabel, employeeTextField])
-		containerView.addSubview(stackView)
+		let nameStackView = createStackView(subviews: [nameLabel, employeeTextField])
+		let birthdayStackView = createStackView(subviews: [birthdayLabel, birthdayTextField])
+		
+		containerView.addSubview(nameStackView)
+		containerView.addSubview(birthdayStackView)
 		
 		NSLayoutConstraint.activate([
 			// Name Stack View Autholayout
-			stackView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CreateEmployeeConstants.Spaces.nameStackViewTopSpace.rawValue),
-			stackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			stackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			stackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
+			nameStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
+			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			nameStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
 			
 			// Name label autholayout
 			nameLabel.widthAnchor.constraint(equalToConstant: 100),
+			
+			// Birthday label autholayout
+			birthdayLabel.widthAnchor.constraint(equalToConstant: 100),
+			
+			// Birthday Stack View
+			birthdayStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor),
+			birthdayStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			birthdayStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			birthdayStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
 		])
+	}
+	
+	fileprivate func presentErrorAlertWithMessage(_ message: String) {
+		let alertAction = UIAlertAction(title: "OK", style: .cancel)
+		let alertController = UIAlertController(title: "Ooops", message: message, preferredStyle: .alert)
+		alertController.addAction(alertAction)
 		
+		present(alertController, animated: true)
+	}
+	
+	fileprivate func checkFormValidity(name: String, birthday: String) {
+		if name.isEmpty {
+			let message = "You did not enter an employee's name"
+			presentErrorAlertWithMessage(message)
+			return
+		}
+		
+		if birthday.isEmpty {
+			let message = "You have not entered birthday"
+			presentErrorAlertWithMessage(message)
+			return
+		}
 	}
 	
 	// MARK: - Objc Fileprivate
@@ -87,8 +137,21 @@ class CreateEmployeeController: UIViewController {
 	@objc fileprivate func handleSave() {
 		guard let employeeName = employeeTextField.text else { return }
 		guard let company = company else { return }
+		guard let birthdayText = birthdayTextField.text else { return }
 		
-		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company) { [weak self] result in
+		// form validation
+		checkFormValidity(name: employeeName, birthday: birthdayText)
+		
+		let dateFormatter = DateFormatter()
+		dateFormatter.dateFormat = "dd/MM/yyyy"
+		
+		guard let birthdayDate = dateFormatter.date(from: birthdayText) else {
+			let message = "Birthday date entered not valid"
+			presentErrorAlertWithMessage(message)
+			return
+		}
+		
+		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company, birthday: birthdayDate) { [weak self] result in
 			switch result {
 			case .success(let employee):
 				self?.dismiss(animated: true) {
