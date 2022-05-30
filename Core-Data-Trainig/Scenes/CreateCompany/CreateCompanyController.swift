@@ -15,19 +15,6 @@ protocol CreateCompanyControllerDelegate: AnyObject {
 
 class CreateCompanyController: UIViewController {
 	
-	// MARK: - CreateCompanyController Constants
-	private enum Constants {
-		enum Sizes: CGFloat {
-			case logoSize = 100
-			case containerViewHeight = 350
-			case fieldsHeight = 50
-		}
-		enum Spaces: CGFloat {
-			case defaultSpace = 16
-			case logoTopSpace = 8
-		}
-	}
-	
 	weak var delegate: CreateCompanyControllerDelegate?
 	
 	var company: Company? {
@@ -71,7 +58,7 @@ class CreateCompanyController: UIViewController {
 		imageView.translatesAutoresizingMaskIntoConstraints = false
 		imageView.isUserInteractionEnabled = true
 		imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
-		imageView.layer.cornerRadius = Constants.Sizes.logoSize.rawValue / 2
+		imageView.layer.cornerRadius = CreateCompanyControllerConstant.Sizes.logoSize.rawValue / 2
 		imageView.layer.borderColor = UIColor.darkBlue.cgColor
 		imageView.layer.borderWidth = 1
 		imageView.clipsToBounds = true
@@ -102,7 +89,7 @@ class CreateCompanyController: UIViewController {
 	}
 	
 	fileprivate func setupUI() {
-		let containerView = setupContainerView(height: Constants.Sizes.containerViewHeight.rawValue)
+		let containerView = setupContainerView(height: CreateCompanyControllerConstant.Sizes.containerViewHeight.rawValue)
 		let nameStackView = createStackView(subviews: [nameLabel, nameTextField])
 		
 		containerView.addSubview(companyLogo)
@@ -111,16 +98,16 @@ class CreateCompanyController: UIViewController {
 		
 		NSLayoutConstraint.activate([
 			// Company Logo Autholayout
-			companyLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: Constants.Spaces.logoTopSpace.rawValue),
+			companyLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CreateCompanyControllerConstant.Spaces.logoTopSpace.rawValue),
 			companyLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			companyLogo.heightAnchor.constraint(equalToConstant: Constants.Sizes.logoSize.rawValue),
-			companyLogo.widthAnchor.constraint(equalToConstant: Constants.Sizes.logoSize.rawValue),
+			companyLogo.heightAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.logoSize.rawValue),
+			companyLogo.widthAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.logoSize.rawValue),
 			
 			// Name Stack View Autholayout
-			nameStackView.topAnchor.constraint(equalTo: companyLogo.bottomAnchor, constant: Constants.Spaces.defaultSpace.rawValue),
-			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: Constants.Spaces.defaultSpace.rawValue),
-			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -Constants.Spaces.defaultSpace.rawValue),
-			nameStackView.heightAnchor.constraint(equalToConstant: Constants.Sizes.fieldsHeight.rawValue),
+			nameStackView.topAnchor.constraint(equalTo: companyLogo.bottomAnchor, constant: CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
+			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
+			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
+			nameStackView.heightAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.fieldsHeight.rawValue),
 			
 			// Name label autholayout
 			nameLabel.widthAnchor.constraint(equalToConstant: 100),

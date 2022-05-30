@@ -9,22 +9,9 @@ import UIKit
 
 protocol CreateEmployeeControllerDelegate: AnyObject {
 	func didAddEmployee(_ employee: Employee)
-	//	func didChangeCompany(_ employee: Employee)
 }
 
 class CreateEmployeeController: UIViewController {
-	
-	private enum CreateEmployeeConstants {
-		enum Sizes: CGFloat {
-			case containerViewHeight = 150
-			case fieldsHeight = 50
-			case segmentedControllerHeight = 34
-		}
-		enum Spaces: CGFloat {
-			case defaultSpace = 16
-			case nameStackViewTopSpace = 8
-		}
-	}
 	
 	weak var delegate: CreateEmployeeControllerDelegate?
 	var company: Company?
@@ -65,7 +52,12 @@ class CreateEmployeeController: UIViewController {
 	}()
 	
 	private let employeeTypeSegmentedControll: UISegmentedControl = {
-		let types = ["Executive", "Senior Management", "Staff"]
+		let types = [
+			EmployeeType.executive.rawValue,
+			EmployeeType.seniorManagement.rawValue,
+			EmployeeType.staff.rawValue
+		]
+		
 		let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
 		let segmentedControl = UISegmentedControl(items: types)
 		segmentedControl.translatesAutoresizingMaskIntoConstraints = false
@@ -94,7 +86,7 @@ class CreateEmployeeController: UIViewController {
 	}
 	
 	fileprivate func setupLayout() {
-		let containerView = setupContainerView(height: CreateEmployeeConstants.Sizes.containerViewHeight.rawValue)
+		let containerView = setupContainerView(height: CreateEmployeeControllerConstants.Sizes.containerViewHeight.rawValue)
 		let nameStackView = createStackView(subviews: [nameLabel, employeeTextField])
 		let birthdayStackView = createStackView(subviews: [birthdayLabel, birthdayTextField])
 		
@@ -105,9 +97,9 @@ class CreateEmployeeController: UIViewController {
 		NSLayoutConstraint.activate([
 			// Name Stack View Autholayout
 			nameStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			nameStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
+			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			nameStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.fieldsHeight.rawValue),
 			
 			// Name label autholayout
 			nameLabel.widthAnchor.constraint(equalToConstant: 100),
@@ -117,14 +109,14 @@ class CreateEmployeeController: UIViewController {
 			
 			// Birthday Stack View
 			birthdayStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor),
-			birthdayStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			birthdayStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			birthdayStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
+			birthdayStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			birthdayStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			birthdayStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.fieldsHeight.rawValue),
 			
 			employeeTypeSegmentedControll.topAnchor.constraint(equalTo: birthdayStackView.bottomAnchor),
-			employeeTypeSegmentedControll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			employeeTypeSegmentedControll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
-			employeeTypeSegmentedControll.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.segmentedControllerHeight.rawValue)
+			employeeTypeSegmentedControll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			employeeTypeSegmentedControll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
+			employeeTypeSegmentedControll.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.segmentedControllerHeight.rawValue)
 		])
 	}
 	
