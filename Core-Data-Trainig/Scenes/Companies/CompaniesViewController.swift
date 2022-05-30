@@ -21,6 +21,7 @@ class CompaniesViewController: UIViewController {
 		tableView.backgroundColor = .darkBlue
 		tableView.separatorColor = .white
 		tableView.tableFooterView = UIView()
+		tableView.sectionHeaderTopPadding = 0
 		return tableView
 	}()
 	

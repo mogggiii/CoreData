@@ -16,8 +16,9 @@ class CreateEmployeeController: UIViewController {
 	
 	private enum CreateEmployeeConstants {
 		enum Sizes: CGFloat {
-			case containerViewHeight = 100
+			case containerViewHeight = 150
 			case fieldsHeight = 50
+			case segmentedControllerHeight = 34
 		}
 		enum Spaces: CGFloat {
 			case defaultSpace = 16
@@ -63,6 +64,17 @@ class CreateEmployeeController: UIViewController {
 		return textField
 	}()
 	
+	private let employeeTypeSegmentedControll: UISegmentedControl = {
+		let types = ["Executive", "Senior Management", "Staff"]
+		let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
+		let segmentedControl = UISegmentedControl(items: types)
+		segmentedControl.translatesAutoresizingMaskIntoConstraints = false
+		segmentedControl.selectedSegmentTintColor = .darkBlue
+		segmentedControl.selectedSegmentIndex = 0
+		segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
+		return segmentedControl
+	}()
+	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
@@ -88,6 +100,7 @@ class CreateEmployeeController: UIViewController {
 		
 		containerView.addSubview(nameStackView)
 		containerView.addSubview(birthdayStackView)
+		containerView.addSubview(employeeTypeSegmentedControll)
 		
 		NSLayoutConstraint.activate([
 			// Name Stack View Autholayout
@@ -107,6 +120,11 @@ class CreateEmployeeController: UIViewController {
 			birthdayStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
 			birthdayStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
 			birthdayStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.fieldsHeight.rawValue),
+			
+			employeeTypeSegmentedControll.topAnchor.constraint(equalTo: birthdayStackView.bottomAnchor),
+			employeeTypeSegmentedControll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			employeeTypeSegmentedControll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeConstants.Spaces.defaultSpace.rawValue),
+			employeeTypeSegmentedControll.heightAnchor.constraint(equalToConstant: CreateEmployeeConstants.Sizes.segmentedControllerHeight.rawValue)
 		])
 	}
 	
@@ -151,7 +169,9 @@ class CreateEmployeeController: UIViewController {
 			return
 		}
 		
-		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company, birthday: birthdayDate) { [weak self] result in
+		guard let employeeType = employeeTypeSegmentedControll.titleForSegment(at: employeeTypeSegmentedControll.selectedSegmentIndex) else { return }
+	
+		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company, birthday: birthdayDate, employeeType: employeeType) { [weak self] result in
 			switch result {
 			case .success(let employee):
 				self?.dismiss(animated: true) {

@@ -8,6 +8,13 @@
 import UIKit
 import CoreData
 
+class CustomLabel: UILabel {
+	override func drawText(in rect: CGRect) {
+		let insets = UIEdgeInsets(top: 0, left: 16, bottom: 0, right: 0)
+		super.drawText(in: rect.inset(by: insets))
+	}
+}
+
 class EmployeesController: UITableViewController {
 	
 	var company: Company?
@@ -33,11 +40,27 @@ class EmployeesController: UITableViewController {
 	fileprivate func configureTableView() {
 		tableView.backgroundColor = .darkBlue
 		tableView.register(EmployeeCell.self, forCellReuseIdentifier: "cell")
+		tableView.sectionHeaderTopPadding = 0
 	}
 	
 	fileprivate func fetchEmployees() {
 		guard let companyEmployees = company?.employees?.allObjects as? [Employee] else { return }
-		self.employees = companyEmployees
+//		self.employees = companyEmployees
+		
+		shorNameEmployees = companyEmployees.filter({ employee in
+			if let count = employee.name?.count {
+				return count < 6
+			}
+			return false
+		})
+		
+		longNameEmployees = companyEmployees.filter({ employee in
+			if let count = employee.name?.count {
+				return count > 6
+			}
+			
+			return false
+		})
 	}
 	
 	// MARK: - Objc fileprivate
@@ -55,8 +78,35 @@ class EmployeesController: UITableViewController {
 	}
 	
 	// MARK: - UITableViewDataSource
+	
+	override func numberOfSections(in tableView: UITableView) -> Int {
+		return 2
+	}
+	
+	override func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 50
+	}
+	
+	var shorNameEmployees = [Employee]()
+	var longNameEmployees = [Employee]()
+	
+	override func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let label = CustomLabel()
+		label.text = "HEADER"
+		label.textColor = .darkBlue
+		label.font = .systemFont(ofSize: 16, weight: .bold)
+		label.backgroundColor = .lightBlue
+		return label
+	}
+	
 	override func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-		return employees.count
+//		return employees.count
+		switch section {
+		case 0:
+			return shorNameEmployees.count
+		default:
+			return longNameEmployees.count
+		}
 	}
 	
 	override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -64,7 +114,14 @@ class EmployeesController: UITableViewController {
 			return UITableViewCell()
 		}
 		
-		let employee = employees[indexPath.row]
+//		switch indexPath.section {
+//		case 0:
+//			let employee = shorNameEmployees[indexPath.row]
+//			cell.employee = employee
+//		}
+		
+//		let employee = employees[indexPath.row]
+		let employee = indexPath.section == 0 ? shorNameEmployees[indexPath.row] : longNameEmployees[indexPath.row]
 		cell.employee = employee
 		return cell
 	}
