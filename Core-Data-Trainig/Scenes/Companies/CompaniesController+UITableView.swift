@@ -26,6 +26,16 @@ extension CompaniesViewController: UITableViewDelegate, UITableViewDataSource {
 		return 60
 	}
 	
+	func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
+		let label = UILabel()
+		label.backgroundColor = .lightBlue
+		return label
+	}
+	
+	func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
+		return 50
+	}
+	
 	func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
 		let company = self.companies[indexPath.row]
 		let emloyessController = EmployeesController()

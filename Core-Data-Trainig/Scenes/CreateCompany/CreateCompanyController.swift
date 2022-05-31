@@ -15,63 +15,24 @@ protocol CreateCompanyControllerDelegate: AnyObject {
 
 class CreateCompanyController: UIViewController {
 	
+	private let containerView = ContainerView()
 	weak var delegate: CreateCompanyControllerDelegate?
 	
 	var company: Company? {
 		didSet {
-			guard let company = company else { return }
-			nameTextField.text = company.name
-			foundedDatePicker.date = company.founded ?? Date()
-			
-			guard let imageData = company.imageData, let logo = UIImage(data: imageData) else { return }
-			companyLogo.image = logo
+			containerView.company = company
 		}
 	}
 	
-	// MARK: - UI Components
-	
-	private let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Name"
-		label.textColor = .black
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
-	
-	private let nameTextField: UITextField = {
-		let textField = UITextField()
-		textField.placeholder = "Enter Name"
-		textField.textColor = .black
-		textField.translatesAutoresizingMaskIntoConstraints = false
-		return textField
-	}()
-	
-	private let foundedDatePicker: UIDatePicker = {
-		let datePicker = UIDatePicker()
-		datePicker.translatesAutoresizingMaskIntoConstraints = false
-		datePicker.preferredDatePickerStyle = .wheels
-		datePicker.datePickerMode = .date
-		return datePicker
-	}()
-	
-	private lazy var companyLogo: UIImageView = {
-		let imageView = UIImageView(image: UIImage(named: "select_photo_placeholder"))
-		imageView.translatesAutoresizingMaskIntoConstraints = false
-		imageView.isUserInteractionEnabled = true
-		imageView.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
-		imageView.layer.cornerRadius = CreateCompanyControllerConstant.Sizes.logoSize.rawValue / 2
-		imageView.layer.borderColor = UIColor.darkBlue.cgColor
-		imageView.layer.borderWidth = 1
-		imageView.clipsToBounds = true
-		imageView.contentMode = .scaleAspectFill
-		return imageView
-	}()
+	override func loadView() {
+		view = containerView
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		view.backgroundColor = .darkBlue
 		
-		setupUI()
+		containerView.companyLogo.addGestureRecognizer(UITapGestureRecognizer(target: self, action: #selector(handleSelectPhoto)))
 		configureNavigationButtons()
 	}
 	
@@ -89,46 +50,14 @@ class CreateCompanyController: UIViewController {
 		setupSaveButtonInNavBar(#selector(handleSave))
 	}
 	
-	fileprivate func setupUI() {
-		let containerView = setupContainerView(height: CreateCompanyControllerConstant.Sizes.containerViewHeight.rawValue)
-		let nameStackView = createStackView(subviews: [nameLabel, nameTextField])
-		
-		containerView.addSubview(companyLogo)
-		containerView.addSubview(nameStackView)
-		containerView.addSubview(foundedDatePicker)
-		
-		NSLayoutConstraint.activate([
-			// Company Logo Autholayout
-			companyLogo.topAnchor.constraint(equalTo: containerView.topAnchor, constant: CreateCompanyControllerConstant.Spaces.logoTopSpace.rawValue),
-			companyLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-			companyLogo.heightAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.logoSize.rawValue),
-			companyLogo.widthAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.logoSize.rawValue),
-			
-			// Name Stack View Autholayout
-			nameStackView.topAnchor.constraint(equalTo: companyLogo.bottomAnchor, constant: CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
-			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
-			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateCompanyControllerConstant.Spaces.defaultSpace.rawValue),
-			nameStackView.heightAnchor.constraint(equalToConstant: CreateCompanyControllerConstant.Sizes.fieldsHeight.rawValue),
-			
-			// Name label autholayout
-			nameLabel.widthAnchor.constraint(equalToConstant: 100),
-			
-			// Date Picker Autholayot
-			foundedDatePicker.topAnchor.constraint(equalTo: nameStackView.bottomAnchor),
-			foundedDatePicker.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-			foundedDatePicker.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-			foundedDatePicker.bottomAnchor.constraint(equalTo: containerView.bottomAnchor),
-		])
-	}
-	
 	fileprivate func createCompany() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
 		let company = NSEntityDescription.insertNewObject(forEntityName: "Company", into: context)
 		
-		guard let imageData = companyLogo.image?.jpegData(compressionQuality: 0.8) else { return }
+		guard let imageData = containerView.companyLogo.image?.jpegData(compressionQuality: 0.8) else { return }
 		
-		company.setValue(nameTextField.text, forKey: "name")
-		company.setValue(foundedDatePicker.date, forKey: "founded")
+		company.setValue(containerView.nameTextField.text, forKey: "name")
+		company.setValue(containerView.foundedDatePicker.date, forKey: "founded")
 		company.setValue(imageData, forKey: "imageData")
 		
 		do {
@@ -143,11 +72,11 @@ class CreateCompanyController: UIViewController {
 	
 	fileprivate func saveComanyChanges() {
 		let context = CoreDataManager.shared.persistentContainer.viewContext
-		let imageData = companyLogo.image?.jpegData(compressionQuality: 0.8)
+		let imageData = containerView.companyLogo.image?.jpegData(compressionQuality: 0.8)
 		
 		// update values in core data
-		company?.name = nameTextField.text
-		company?.founded = foundedDatePicker.date
+		company?.name = containerView.nameTextField.text
+		company?.founded = containerView.foundedDatePicker.date
 		company?.imageData = imageData
 		
 		do {
@@ -191,11 +120,11 @@ extension CreateCompanyController: UIImagePickerControllerDelegate, UINavigation
 	func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey : Any]) {
 		
 		if let editingImage = info[.editedImage] as? UIImage {
-			companyLogo.image = editingImage
+			containerView.companyLogo.image = editingImage
 		}
 		
 		if let originalImage = info[.originalImage] as? UIImage {
-			companyLogo.image = originalImage
+			containerView.companyLogo.image = originalImage
 		}
 		
 		dismiss(animated: true)
