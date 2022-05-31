@@ -7,12 +7,12 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		CE12B36E2845D25300A0C7A4 /* CreateEmployeeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE12B36D2845D25300A0C7A4 /* CreateEmployeeView.swift */; };
 		CE1C89E22840AA4F007A3EDC /* EmployeesController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E12840AA4F007A3EDC /* EmployeesController.swift */; };
 		CE1C89E42840ADDE007A3EDC /* UIViewController+Helpers.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E32840ADDE007A3EDC /* UIViewController+Helpers.swift */; };
 		CE1C89E72840AFBB007A3EDC /* CreateEmployeeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E62840AFBB007A3EDC /* CreateEmployeeController.swift */; };
 		CE1C89E92840D441007A3EDC /* EmployeeCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE1C89E82840D440007A3EDC /* EmployeeCell.swift */; };
 		CE2E0B822844FD7F007E22F6 /* EmployeeType.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E0B812844FD7F007E22F6 /* EmployeeType.swift */; };
-		CE2E0B84284500C2007E22F6 /* CreateEmployeeControllerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E0B83284500C2007E22F6 /* CreateEmployeeControllerConstant.swift */; };
 		CE2E0B8628450133007E22F6 /* CreateCompanyControllerConstant.swift in Sources */ = {isa = PBXBuildFile; fileRef = CE2E0B8528450132007E22F6 /* CreateCompanyControllerConstant.swift */; };
 		CEA9069A283FE395004AFA83 /* CompaniesController+CreateCompany.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */; };
 		CEA9069C283FE4F8004AFA83 /* CompaniesController+UITableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */; };
@@ -30,12 +30,12 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		CE12B36D2845D25300A0C7A4 /* CreateEmployeeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeView.swift; sourceTree = "<group>"; };
 		CE1C89E12840AA4F007A3EDC /* EmployeesController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeesController.swift; sourceTree = "<group>"; };
 		CE1C89E32840ADDE007A3EDC /* UIViewController+Helpers.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIViewController+Helpers.swift"; sourceTree = "<group>"; };
 		CE1C89E62840AFBB007A3EDC /* CreateEmployeeController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeController.swift; sourceTree = "<group>"; };
 		CE1C89E82840D440007A3EDC /* EmployeeCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeCell.swift; sourceTree = "<group>"; };
 		CE2E0B812844FD7F007E22F6 /* EmployeeType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EmployeeType.swift; sourceTree = "<group>"; };
-		CE2E0B83284500C2007E22F6 /* CreateEmployeeControllerConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateEmployeeControllerConstant.swift; sourceTree = "<group>"; };
 		CE2E0B8528450132007E22F6 /* CreateCompanyControllerConstant.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CreateCompanyControllerConstant.swift; sourceTree = "<group>"; };
 		CEA90699283FE395004AFA83 /* CompaniesController+CreateCompany.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+CreateCompany.swift"; sourceTree = "<group>"; };
 		CEA9069B283FE4F8004AFA83 /* CompaniesController+UITableView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CompaniesController+UITableView.swift"; sourceTree = "<group>"; };
@@ -79,7 +79,7 @@
 			isa = PBXGroup;
 			children = (
 				CE1C89E62840AFBB007A3EDC /* CreateEmployeeController.swift */,
-				CE2E0B83284500C2007E22F6 /* CreateEmployeeControllerConstant.swift */,
+				CE12B36D2845D25300A0C7A4 /* CreateEmployeeView.swift */,
 			);
 			path = CreateEmployeeController;
 			sourceTree = "<group>";
@@ -252,6 +252,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CEF00C41282BEA8200F15510 /* CompaniesViewController.swift in Sources */,
+				CE12B36E2845D25300A0C7A4 /* CreateEmployeeView.swift in Sources */,
 				CE2E0B8628450133007E22F6 /* CreateCompanyControllerConstant.swift in Sources */,
 				CEA9069C283FE4F8004AFA83 /* CompaniesController+UITableView.swift in Sources */,
 				CEC4D03B2832560B00D06A3F /* CompaniesCell.swift in Sources */,
@@ -260,7 +261,6 @@
 				CEC4D041283500E700D06A3F /* CreateCompanyController.swift in Sources */,
 				CEC4D03D28339B9200D06A3F /* UIColor+theme.swift in Sources */,
 				CE1C89E22840AA4F007A3EDC /* EmployeesController.swift in Sources */,
-				CE2E0B84284500C2007E22F6 /* CreateEmployeeControllerConstant.swift in Sources */,
 				CEF00C3F282BEA8200F15510 /* SceneDelegate.swift in Sources */,
 				CE1C89E92840D441007A3EDC /* EmployeeCell.swift in Sources */,
 				CE1C89E72840AFBB007A3EDC /* CreateEmployeeController.swift in Sources */,

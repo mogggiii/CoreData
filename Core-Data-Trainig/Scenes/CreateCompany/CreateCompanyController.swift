@@ -29,6 +29,7 @@ class CreateCompanyController: UIViewController {
 	}
 	
 	// MARK: - UI Components
+	
 	private let nameLabel: UILabel = {
 		let label = UILabel()
 		label.text = "Name"

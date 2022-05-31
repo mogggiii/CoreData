@@ -3,4 +3,114 @@
    uuid = "D62534FE-2B51-48F6-831C-C1FA3BFEC7D3"
    type = "1"
    version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "28"
+            endingLineNumber = "28"
+            landmarkName = "CreateEmployeeView"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - b6f8c35ffa20f3b2"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.employeeName.getter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "100">
+               </Location>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - 77cb306aaeaaa3be"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.employeeName.setter : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "140">
+               </Location>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - 9dbdb238ae4b5233"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.employeeName.modify : Swift.Optional&lt;Swift.String&gt;"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "0"
+                  endingLineNumber = "0"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - 7bd2b15fb5734f3d"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.employeeName.modify : Swift.Optional&lt;Swift.String&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "20">
+               </Location>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - 658df8488739dbb0"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.init(frame: __C.CGRect) -&gt; Core_Data_Trainig.CreateEmployeeView"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "124">
+               </Location>
+               <Location
+                  uuid = "A7FEA15A-3BBA-42E5-AF4B-39AF75334D81 - f0cb0c894260c8ee"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "Core_Data_Trainig.CreateEmployeeView.init(coder: __C.NSCoder) -&gt; Swift.Optional&lt;Core_Data_Trainig.CreateEmployeeView&gt;"
+                  moduleName = "Core-Data-Trainig"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/user/Desktop/Developer/Core-Data-Trainig/Core-Data-Trainig/Scenes/CreateEmployeeController/CreateEmployeeView.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "28"
+                  endingLineNumber = "28"
+                  offsetFromSymbolStart = "108">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
 </Bucket>

@@ -13,69 +13,25 @@ protocol CreateEmployeeControllerDelegate: AnyObject {
 
 class CreateEmployeeController: UIViewController {
 	
+	private let createEmployeeView = CreateEmployeeView()
+	
 	weak var delegate: CreateEmployeeControllerDelegate?
+	
 	var company: Company?
 	
-	// MARK: - UI Components
+	// MARK: - ViewController Lifecycle
 	
-	private let nameLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Name"
-		label.textColor = .black
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
-	
-	private let employeeTextField: UITextField = {
-		let textField = UITextField()
-		textField.placeholder = "Enter Name"
-		textField.textColor = .black
-		textField.translatesAutoresizingMaskIntoConstraints = false
-		return textField
-	}()
-	
-	private let birthdayLabel: UILabel = {
-		let label = UILabel()
-		label.text = "Birthday"
-		label.textColor = .black
-		label.translatesAutoresizingMaskIntoConstraints = false
-		return label
-	}()
-	
-	private let birthdayTextField: UITextField = {
-		let textField = UITextField()
-		textField.placeholder = "DD/MM/YYYY"
-		textField.keyboardType = .numbersAndPunctuation
-		textField.textColor = .black
-		textField.translatesAutoresizingMaskIntoConstraints = false
-		return textField
-	}()
-	
-	private let employeeTypeSegmentedControll: UISegmentedControl = {
-		let types = [
-			EmployeeType.executive.rawValue,
-			EmployeeType.seniorManagement.rawValue,
-			EmployeeType.staff.rawValue
-		]
-		
-		let titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.white]
-		let segmentedControl = UISegmentedControl(items: types)
-		segmentedControl.translatesAutoresizingMaskIntoConstraints = false
-		segmentedControl.selectedSegmentTintColor = .darkBlue
-		segmentedControl.selectedSegmentIndex = 0
-		segmentedControl.setTitleTextAttributes(titleTextAttributes, for: .selected)
-		return segmentedControl
-	}()
+	override func loadView() {
+		view = createEmployeeView
+	}
 	
 	override func viewDidLoad() {
 		super.viewDidLoad()
 		
 		navigationItem.title = "Create Employee"
-		
 		view?.backgroundColor = .darkBlue
 		
 		setupNavigationButtons()
-		setupLayout()
 	}
 	
 	// MARK: - Fileprivate
@@ -83,41 +39,6 @@ class CreateEmployeeController: UIViewController {
 	fileprivate func setupNavigationButtons() {
 		setupCancelButtonInNavBar()
 		setupSaveButtonInNavBar(#selector(handleSave))
-	}
-	
-	fileprivate func setupLayout() {
-		let containerView = setupContainerView(height: CreateEmployeeControllerConstants.Sizes.containerViewHeight.rawValue)
-		let nameStackView = createStackView(subviews: [nameLabel, employeeTextField])
-		let birthdayStackView = createStackView(subviews: [birthdayLabel, birthdayTextField])
-		
-		containerView.addSubview(nameStackView)
-		containerView.addSubview(birthdayStackView)
-		containerView.addSubview(employeeTypeSegmentedControll)
-		
-		NSLayoutConstraint.activate([
-			// Name Stack View Autholayout
-			nameStackView.topAnchor.constraint(equalTo: containerView.topAnchor),
-			nameStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			nameStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			nameStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.fieldsHeight.rawValue),
-			
-			// Name label autholayout
-			nameLabel.widthAnchor.constraint(equalToConstant: 100),
-			
-			// Birthday label autholayout
-			birthdayLabel.widthAnchor.constraint(equalToConstant: 100),
-			
-			// Birthday Stack View
-			birthdayStackView.topAnchor.constraint(equalTo: nameStackView.bottomAnchor),
-			birthdayStackView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			birthdayStackView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			birthdayStackView.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.fieldsHeight.rawValue),
-			
-			employeeTypeSegmentedControll.topAnchor.constraint(equalTo: birthdayStackView.bottomAnchor),
-			employeeTypeSegmentedControll.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			employeeTypeSegmentedControll.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -CreateEmployeeControllerConstants.Spaces.defaultSpace.rawValue),
-			employeeTypeSegmentedControll.heightAnchor.constraint(equalToConstant: CreateEmployeeControllerConstants.Sizes.segmentedControllerHeight.rawValue)
-		])
 	}
 	
 	fileprivate func presentErrorAlertWithMessage(_ message: String) {
@@ -145,24 +66,23 @@ class CreateEmployeeController: UIViewController {
 	// MARK: - Objc Fileprivate
 	
 	@objc fileprivate func handleSave() {
-		guard let employeeName = employeeTextField.text else { return }
+		guard let employeeName = createEmployeeView.employeeTextField.text else { return }
+		guard let birthdayText = createEmployeeView.birthdayTextField.text else { return }
+		guard let employeeType = createEmployeeView.employeeTypeSegmentedControll.titleForSegment(at: createEmployeeView.employeeTypeSegmentedControll.selectedSegmentIndex) else { return }
 		guard let company = company else { return }
-		guard let birthdayText = birthdayTextField.text else { return }
-		
-		// form validation
+	
+//		 form validation
 		checkFormValidity(name: employeeName, birthday: birthdayText)
-		
+
 		let dateFormatter = DateFormatter()
 		dateFormatter.dateFormat = "dd/MM/yyyy"
-		
+
 		guard let birthdayDate = dateFormatter.date(from: birthdayText) else {
 			let message = "Birthday date entered not valid"
 			presentErrorAlertWithMessage(message)
 			return
 		}
-		
-		guard let employeeType = employeeTypeSegmentedControll.titleForSegment(at: employeeTypeSegmentedControll.selectedSegmentIndex) else { return }
-	
+
 		CoreDataManager.shared.createEmployee(employeeName: employeeName, company: company, birthday: birthdayDate, employeeType: employeeType) { [weak self] result in
 			switch result {
 			case .success(let employee):

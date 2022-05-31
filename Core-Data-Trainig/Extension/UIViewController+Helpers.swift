@@ -50,3 +50,28 @@ extension UIViewController {
 		dismiss(animated: true)
 	}
 }
+
+extension UIView {
+	func setupContainerView(height: CGFloat) -> UIView {
+		let container = UIView()
+		container.backgroundColor = .lightBlue
+		container.translatesAutoresizingMaskIntoConstraints = false
+		addSubview(container)
+		
+		NSLayoutConstraint.activate([
+			container.topAnchor.constraint(equalTo: topAnchor),
+			container.leadingAnchor.constraint(equalTo: leadingAnchor),
+			container.trailingAnchor.constraint(equalTo: trailingAnchor),
+			container.heightAnchor.constraint(equalToConstant: height),
+		])
+		
+		return container
+	}
+	
+	// Generate stack view
+	func createStackView(subviews: [UIView]) -> UIStackView {
+		let stackView = UIStackView(arrangedSubviews: subviews)
+		stackView.translatesAutoresizingMaskIntoConstraints = false
+		return stackView
+	}
+}
